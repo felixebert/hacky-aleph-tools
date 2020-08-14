@@ -1,5 +1,3 @@
-various hacky, difficult to understand and sometimes dangerous command line tools for aleph, which get hopefully unnecessary soon.
-
 Covered use cases:
 - analyze completeness of a collection and partially fix errors (collection-qa)
     - does the document table include all files of the source? (missing files in crawldir / upload step?)
