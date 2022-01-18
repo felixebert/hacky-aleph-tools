@@ -6,6 +6,8 @@
 import csv
 import requests
 import re
+import logging
+log = logging.getLogger(__name__)
 
 #
 # SETTINGS
@@ -85,12 +87,16 @@ def convert_results(api_results, searchterm):
 results = []
 searchterms = get_searchterms()
 for index, searchterm in enumerate(searchterms):
-    searchterm_results = search_aleph(searchterm)
-    searchterm_results = convert_results(searchterm_results, searchterm)
-    for result in searchterm_results:
-        results.append(result)
-    print(str(index) + "/" + str(len(searchterms)) + ", total " + str(
-        len(results)) + ": search for " + searchterm + " added " + str(len(searchterm_results)) + " results")
+    try:
+        searchterm_results = search_aleph(searchterm)
+        searchterm_results = convert_results(searchterm_results, searchterm)
+        for result in searchterm_results:
+            results.append(result)
+        log.info(str(index) + "/" + str(len(searchterms)) + ", total " + str(
+            len(results)) + ": search for " + searchterm + " added " + str(len(searchterm_results)) + " results")
+    except Exception:
+        log.exception(str(index) + "/" + str(len(searchterms)) + ", total " + str(
+            len(results)) + ": search for " + searchterm + " failed!")
 
 with open(OUTPUT_FILE, 'w', newline='') as outputfile:
     fieldnames = ["Suchbegriff", "Collection", "Dokumentname", "Dateiname", "Autor", "Vorschau", "Link"]
