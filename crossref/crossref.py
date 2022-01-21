@@ -4,10 +4,13 @@
 # If all 10 results are interesting you should search manually for more results
 
 import csv
-import requests
-import re
 import logging
+import re
+import requests
+
+logging.basicConfig()
 log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
 
 #
 # SETTINGS
@@ -50,7 +53,12 @@ def search_aleph(term):
     }
     url = ALEPH_INSTANCE + "api/2/entities"
     r = requests.get(url, params=params, headers=headers)
-    res = r.json()
+    try:
+        res = r.json()
+    except Exception as e:
+        log.error("got invalid response from " + r.url + " - no valid json: " + r.text)
+        raise e
+
     if res.get("results") is not None:
         return res.get("results")
     else:
