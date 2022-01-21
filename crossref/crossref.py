@@ -7,6 +7,7 @@ import csv
 import logging
 import re
 import requests
+import time
 
 logging.basicConfig()
 log = logging.getLogger(__name__)
@@ -102,6 +103,9 @@ for index, searchterm in enumerate(searchterms):
             results.append(result)
         log.info(str(index) + "/" + str(len(searchterms)) + ", total " + str(
             len(results)) + ": search for " + searchterm + " added " + str(len(searchterm_results)) + " results")
+
+        # avoid too many requests error
+        time.sleep(1.8)
     except Exception:
         log.exception(str(index) + "/" + str(len(searchterms)) + ", total " + str(
             len(results)) + ": search for " + searchterm + " failed!")
