@@ -43,11 +43,7 @@ def search_aleph(term):
     params = {
         "q": term,
         "limit": 10,
-        "filter:schema": "Pages",
         "filter:schemata": "Thing",
-        "facet": "schema",
-        "facet_size:schema": 20,
-        "facet_total:schema": "true",
         "highlight": "true",
         "highlight_count": "3",
         "highlight_length": 280
